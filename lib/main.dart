@@ -13,12 +13,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: AppTheme.lightTheme,
-      home: Builder(
-        builder: (context) {
-          return ForkifyScaffold(
-            body: Text("HELLO MA CAILLE"),
-          );
-        },
+      home: ForkifyScaffold(
+        body: Text("HELLO MA CAILLE"),
       ),
     );
   }
