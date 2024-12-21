@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forkify/res/theme/app_theme.dart';
-import 'package:forkify/view/feature/scaffold/forkify_scaffold.feature.dart';
+import 'package:forkify/utils/router.utils.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,11 +11,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       theme: AppTheme.lightTheme,
-      home: ForkifyScaffold(
-        body: Text("HELLO MA CAILLE"),
-      ),
     );
   }
 }
