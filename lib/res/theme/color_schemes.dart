@@ -12,4 +12,5 @@ const lightColorScheme = ColorScheme(
   onSurface: Color(0xff000000),
   primaryContainer: Color(0xffebe2e0),
   onPrimaryContainer: Color(0xff1f1614),
+  outline: Color(0xff9D7062)
 );
