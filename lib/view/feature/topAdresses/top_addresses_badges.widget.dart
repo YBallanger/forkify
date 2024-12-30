@@ -68,7 +68,7 @@ class TopAddressesBadges extends StatelessWidget {
                   Text(
                     secondRestaurant.restaurant.name,
                     style: Fonts.bodySmall,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
@@ -123,7 +123,7 @@ class TopAddressesBadges extends StatelessWidget {
                   Text(
                     thirdRestaurant.restaurant.name,
                     style: Fonts.bodySmall,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
