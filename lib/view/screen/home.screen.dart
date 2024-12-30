@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forkify/view/feature/topAdresses/top_addresses.feature.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -7,6 +8,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Home page");
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          TopAddresses()
+        ],
+      ),
+    );
   }
 }

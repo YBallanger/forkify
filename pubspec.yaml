@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.16
   go_router: ^14.6.2
 
 dev_dependencies:
@@ -18,3 +19,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - asset/medal/
