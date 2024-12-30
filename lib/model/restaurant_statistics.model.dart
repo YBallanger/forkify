@@ -6,7 +6,7 @@ import 'package:forkify/model/restaurant.model.dart';
 class RestaurantStatisticsModel {
   RestaurantModel restaurant;
   double amountSpent;
-  int rating;
+  double rating;
   int numberOfVisits;
 
   RestaurantStatisticsModel({
@@ -19,7 +19,7 @@ class RestaurantStatisticsModel {
   RestaurantStatisticsModel copyWith({
     RestaurantModel? restaurant,
     double? amountSpent,
-    int? rating,
+    double? rating,
     int? numberOfVisits,
   }) {
     return RestaurantStatisticsModel(
@@ -44,7 +44,7 @@ class RestaurantStatisticsModel {
       restaurant:
           RestaurantModel.fromMap(map['restaurant'] as Map<String, dynamic>),
       amountSpent: map['amountSpent'] as double,
-      rating: map['rating'] as int,
+      rating: map['rating'] as double,
       numberOfVisits: map['numberOfVisits'] as int,
     );
   }

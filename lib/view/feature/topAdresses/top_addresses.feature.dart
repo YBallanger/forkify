@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:forkify/model/restaurant.model.dart';
 import 'package:forkify/model/restaurant_statistics.model.dart';
@@ -18,14 +16,71 @@ class TopAddresses extends StatefulWidget {
 
 class _TopAddressesState extends State<TopAddresses>
     with TickerProviderStateMixin {
-  final List<RestaurantStatisticsModel> _restaurantStatistics = [];
+  List<RestaurantStatisticsModel> _restaurantStatisticsMoney = [];
+  List<RestaurantStatisticsModel> _restaurantStatisticsRating = [];
+  List<RestaurantStatisticsModel> _restaurantStatisticsVisit = [];
 
   late final TabController _tabController;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+
+    _restaurantStatisticsMoney = [
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "Général Tao"),
+          amountSpent: 200.34,
+          rating: 4.9,
+          numberOfVisits: 7),
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "La piste"),
+          amountSpent: 28.78,
+          rating: 4.6,
+          numberOfVisits: 7),
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "L'atelier du sushi"),
+          amountSpent: 14.343434,
+          rating: 4.2,
+          numberOfVisits: 6),
+    ];
+
+    _restaurantStatisticsRating = [
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "Général Tao"),
+          amountSpent: 200.34,
+          rating: 4.9,
+          numberOfVisits: 7),
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "La piste"),
+          amountSpent: 28.78,
+          rating: 4.6,
+          numberOfVisits: 7),
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "L'atelier du sushi"),
+          amountSpent: 14.343434,
+          rating: 4.2,
+          numberOfVisits: 6),
+    ];
+
+    _restaurantStatisticsVisit = [
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "Général Tao"),
+          amountSpent: 200.34,
+          rating: 4.9,
+          numberOfVisits: 7),
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "La piste"),
+          amountSpent: 28.78,
+          rating: 4.6,
+          numberOfVisits: 7),
+      RestaurantStatisticsModel(
+          restaurant: RestaurantModel(name: "L'atelier du sushi"),
+          amountSpent: 14.343434,
+          rating: 4.2,
+          numberOfVisits: 6),
+    ];
   }
 
   @override
@@ -33,6 +88,22 @@ class _TopAddressesState extends State<TopAddresses>
     _tabController.dispose();
     super.dispose();
   }
+
+  void loadData() async {
+  await Future.delayed(Duration(seconds: 1)); // Simule un chargement
+  setState(() {
+    _restaurantStatisticsMoney = [
+      // vos données ici
+    ];
+    _restaurantStatisticsRating = [
+      // vos données ici
+    ];
+    _restaurantStatisticsVisit = [
+      // vos données ici
+    ];
+    _isLoading = false;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -59,24 +130,29 @@ class _TopAddressesState extends State<TopAddresses>
           SizedBox(
             height: 20,
           ),
-          TopAddressesBadges(
-            firstRestaurant: RestaurantStatisticsModel(
-                restaurant: RestaurantModel(name: "res1"),
-                amountSpent: 4,
-                rating: 4,
-                numberOfVisits: 7),
-            secondRestaurant: RestaurantStatisticsModel(
-                restaurant: RestaurantModel(name: "res2"),
-                amountSpent: 12,
-                rating: 4,
-                numberOfVisits: 7),
-            thirdRestaurant: RestaurantStatisticsModel(
-                restaurant: RestaurantModel(name: "res3"),
-                amountSpent: 14,
-                rating: 2,
-                numberOfVisits: 67),
-            badgesGraphType: BadgesGraphType.money,
-          )
+          SizedBox(
+            height: 193,
+            child: TabBarView(controller: _tabController, children: [
+              TopAddressesBadges(
+                firstRestaurant: _restaurantStatisticsMoney[0],
+                secondRestaurant: _restaurantStatisticsMoney[1],
+                thirdRestaurant: _restaurantStatisticsMoney[2],
+                badgesGraphType: BadgesGraphType.money,
+              ),
+              TopAddressesBadges(
+                firstRestaurant: _restaurantStatisticsRating[0],
+                secondRestaurant: _restaurantStatisticsRating[1],
+                thirdRestaurant: _restaurantStatisticsRating[2],
+                badgesGraphType: BadgesGraphType.rating,
+              ),
+              TopAddressesBadges(
+                firstRestaurant: _restaurantStatisticsVisit[0],
+                secondRestaurant: _restaurantStatisticsVisit[1],
+                thirdRestaurant: _restaurantStatisticsVisit[2],
+                badgesGraphType: BadgesGraphType.visit,
+              ),
+            ]),
+          ),
         ],
       ),
     );
