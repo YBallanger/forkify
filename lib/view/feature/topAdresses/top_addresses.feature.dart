@@ -21,7 +21,6 @@ class _TopAddressesState extends State<TopAddresses>
   List<RestaurantStatisticsModel> _restaurantStatisticsVisit = [];
 
   late final TabController _tabController;
-  bool _isLoading = true;
 
   @override
   void initState() {
@@ -88,22 +87,6 @@ class _TopAddressesState extends State<TopAddresses>
     _tabController.dispose();
     super.dispose();
   }
-
-  void loadData() async {
-  await Future.delayed(Duration(seconds: 1)); // Simule un chargement
-  setState(() {
-    _restaurantStatisticsMoney = [
-      // vos données ici
-    ];
-    _restaurantStatisticsRating = [
-      // vos données ici
-    ];
-    _restaurantStatisticsVisit = [
-      // vos données ici
-    ];
-    _isLoading = false;
-  });
-}
 
   @override
   Widget build(BuildContext context) {
