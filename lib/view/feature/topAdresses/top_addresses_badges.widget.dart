@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:forkify/model/restaurant_statistics.model.dart';
+import 'package:forkify/model/user_restaurant_statistics.model.dart';
 import 'package:forkify/res/fonts.dart';
 import 'package:forkify/view/feature/topAdresses/top_addresses.feature.dart';
 
@@ -13,9 +13,9 @@ class TopAddressesBadges extends StatelessWidget {
     required this.badgesGraphType,
   });
 
-  final RestaurantStatisticsModel firstRestaurant;
-  final RestaurantStatisticsModel secondRestaurant;
-  final RestaurantStatisticsModel thirdRestaurant;
+  final UserRestaurantStatisticsModel firstRestaurant;
+  final UserRestaurantStatisticsModel secondRestaurant;
+  final UserRestaurantStatisticsModel thirdRestaurant;
   final BadgesGraphType badgesGraphType;
 
   String getTitle() {
@@ -29,7 +29,7 @@ class TopAddressesBadges extends StatelessWidget {
     }
   }
 
-  String getResult(RestaurantStatisticsModel restaurantStatistics) {
+  String getResult(UserRestaurantStatisticsModel restaurantStatistics) {
     switch (badgesGraphType) {
       case BadgesGraphType.money:
         return "${restaurantStatistics.amountSpent.toStringAsFixed(2)} €";
