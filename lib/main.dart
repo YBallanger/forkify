@@ -1,10 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:forkify/firebase_options.dart';
 import 'package:forkify/res/theme/app_theme.dart';
 import 'package:forkify/utils/router.utils.dart';
 import 'package:forkify/viewModel/user_statistics.view_model.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => UserStatisticsViewModel()),
