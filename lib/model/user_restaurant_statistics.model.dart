@@ -1,28 +1,27 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:forkify/model/restaurant.model.dart';
 
-class RestaurantStatisticsModel {
+class UserRestaurantStatisticsModel {
   RestaurantModel restaurant;
   double amountSpent;
   double rating;
   int numberOfVisits;
 
-  RestaurantStatisticsModel({
+  UserRestaurantStatisticsModel({
     required this.restaurant,
     required this.amountSpent,
     required this.rating,
     required this.numberOfVisits,
   });
 
-  RestaurantStatisticsModel copyWith({
+  UserRestaurantStatisticsModel copyWith({
     RestaurantModel? restaurant,
     double? amountSpent,
     double? rating,
     int? numberOfVisits,
   }) {
-    return RestaurantStatisticsModel(
+    return UserRestaurantStatisticsModel(
       restaurant: restaurant ?? this.restaurant,
       amountSpent: amountSpent ?? this.amountSpent,
       rating: rating ?? this.rating,
@@ -39,8 +38,8 @@ class RestaurantStatisticsModel {
     };
   }
 
-  factory RestaurantStatisticsModel.fromMap(Map<String, dynamic> map) {
-    return RestaurantStatisticsModel(
+  factory UserRestaurantStatisticsModel.fromMap(Map<String, dynamic> map) {
+    return UserRestaurantStatisticsModel(
       restaurant:
           RestaurantModel.fromMap(map['restaurant'] as Map<String, dynamic>),
       amountSpent: map['amountSpent'] as double,
@@ -51,8 +50,8 @@ class RestaurantStatisticsModel {
 
   String toJson() => json.encode(toMap());
 
-  factory RestaurantStatisticsModel.fromJson(String source) =>
-      RestaurantStatisticsModel.fromMap(
+  factory UserRestaurantStatisticsModel.fromJson(String source) =>
+      UserRestaurantStatisticsModel.fromMap(
           json.decode(source) as Map<String, dynamic>);
 
   @override
@@ -61,7 +60,7 @@ class RestaurantStatisticsModel {
   }
 
   @override
-  bool operator ==(covariant RestaurantStatisticsModel other) {
+  bool operator ==(covariant UserRestaurantStatisticsModel other) {
     if (identical(this, other)) return true;
 
     return other.restaurant == restaurant &&

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forkify/model/restaurant.model.dart';
-import 'package:forkify/model/restaurant_statistics.model.dart';
+import 'package:forkify/model/user_restaurant_statistics.model.dart';
 import 'package:forkify/res/fonts.dart';
 import 'package:forkify/view/feature/topAdresses/top_addresses_badges.widget.dart';
 import 'package:forkify/view/feature/topAdresses/top_addresses_tab_bar.widget.dart';
@@ -16,9 +16,9 @@ class TopAddresses extends StatefulWidget {
 
 class _TopAddressesState extends State<TopAddresses>
     with TickerProviderStateMixin {
-  List<RestaurantStatisticsModel> _restaurantStatisticsMoney = [];
-  List<RestaurantStatisticsModel> _restaurantStatisticsRating = [];
-  List<RestaurantStatisticsModel> _restaurantStatisticsVisit = [];
+  List<UserRestaurantStatisticsModel> _userRestaurantStatisticsMoney = [];
+  List<UserRestaurantStatisticsModel> _userRestaurantStatisticsRating = [];
+  List<UserRestaurantStatisticsModel> _userRestaurantStatisticsVisit = [];
 
   late final TabController _tabController;
 
@@ -27,54 +27,54 @@ class _TopAddressesState extends State<TopAddresses>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
 
-    _restaurantStatisticsMoney = [
-      RestaurantStatisticsModel(
+    _userRestaurantStatisticsMoney = [
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "Général Tao"),
           amountSpent: 200.34,
           rating: 4.9,
           numberOfVisits: 7),
-      RestaurantStatisticsModel(
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "La piste"),
           amountSpent: 28.78,
           rating: 4.6,
           numberOfVisits: 7),
-      RestaurantStatisticsModel(
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "L'atelier du sushi"),
           amountSpent: 14.343434,
           rating: 4.2,
           numberOfVisits: 6),
     ];
 
-    _restaurantStatisticsRating = [
-      RestaurantStatisticsModel(
+    _userRestaurantStatisticsRating = [
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "Général Tao"),
           amountSpent: 200.34,
           rating: 4.9,
           numberOfVisits: 7),
-      RestaurantStatisticsModel(
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "La piste"),
           amountSpent: 28.78,
           rating: 4.6,
           numberOfVisits: 7),
-      RestaurantStatisticsModel(
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "L'atelier du sushi"),
           amountSpent: 14.343434,
           rating: 4.2,
           numberOfVisits: 6),
     ];
 
-    _restaurantStatisticsVisit = [
-      RestaurantStatisticsModel(
+    _userRestaurantStatisticsVisit = [
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "Général Tao"),
           amountSpent: 200.34,
           rating: 4.9,
           numberOfVisits: 7),
-      RestaurantStatisticsModel(
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "La piste"),
           amountSpent: 28.78,
           rating: 4.6,
           numberOfVisits: 7),
-      RestaurantStatisticsModel(
+      UserRestaurantStatisticsModel(
           restaurant: RestaurantModel(name: "L'atelier du sushi"),
           amountSpent: 14.343434,
           rating: 4.2,
@@ -117,21 +117,21 @@ class _TopAddressesState extends State<TopAddresses>
             height: 193,
             child: TabBarView(controller: _tabController, children: [
               TopAddressesBadges(
-                firstRestaurant: _restaurantStatisticsMoney[0],
-                secondRestaurant: _restaurantStatisticsMoney[1],
-                thirdRestaurant: _restaurantStatisticsMoney[2],
+                firstRestaurant: _userRestaurantStatisticsMoney[0],
+                secondRestaurant: _userRestaurantStatisticsMoney[1],
+                thirdRestaurant: _userRestaurantStatisticsMoney[2],
                 badgesGraphType: BadgesGraphType.money,
               ),
               TopAddressesBadges(
-                firstRestaurant: _restaurantStatisticsRating[0],
-                secondRestaurant: _restaurantStatisticsRating[1],
-                thirdRestaurant: _restaurantStatisticsRating[2],
+                firstRestaurant: _userRestaurantStatisticsRating[0],
+                secondRestaurant: _userRestaurantStatisticsRating[1],
+                thirdRestaurant: _userRestaurantStatisticsRating[2],
                 badgesGraphType: BadgesGraphType.rating,
               ),
               TopAddressesBadges(
-                firstRestaurant: _restaurantStatisticsVisit[0],
-                secondRestaurant: _restaurantStatisticsVisit[1],
-                thirdRestaurant: _restaurantStatisticsVisit[2],
+                firstRestaurant: _userRestaurantStatisticsVisit[0],
+                secondRestaurant: _userRestaurantStatisticsVisit[1],
+                thirdRestaurant: _userRestaurantStatisticsVisit[2],
                 badgesGraphType: BadgesGraphType.visit,
               ),
             ]),
