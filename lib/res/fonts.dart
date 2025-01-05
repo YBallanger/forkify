@@ -7,6 +7,9 @@ class Fonts {
   static final TextStyle bodyMedium = TextStyle(
       fontFamily: "roboto", fontSize: 14, fontWeight: FontWeight.w500);
 
+  static final TextStyle bodyLarge = TextStyle(
+      fontFamily: "roboto", fontSize: 16, fontWeight: FontWeight.w500);
+
   static final TextStyle boldBodyMedium = TextStyle(
       fontFamily: "roboto", fontSize: 14, fontWeight: FontWeight.w700);
 

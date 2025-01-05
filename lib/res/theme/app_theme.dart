@@ -19,6 +19,13 @@ class AppTheme {
         selectedLabelStyle: Fonts.bodyMedium,
         unselectedLabelStyle: Fonts.bodyMedium,
       ),
+      dividerTheme: DividerThemeData(
+        color: colorScheme.outline
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(),
+        labelStyle: Fonts.bodyMedium
+      )
     );
   }
 
