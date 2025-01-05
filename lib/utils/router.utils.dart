@@ -6,16 +6,14 @@ import 'package:forkify/view/screen/home.screen.dart';
 import 'package:forkify/view/screen/login.screen.dart';
 import 'package:forkify/view/screen/map.screen.dart';
 import 'package:forkify/view/screen/profile.screen.dart';
+import 'package:forkify/view/screen/signup.screen.dart';
 import 'package:forkify/view/screen/statistics.screen.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
-  redirect: ((context, state) {
-    final user = FirebaseAuth.instance.currentUser;
-    return user == null ? "/login" : null;
-  }),
   routes: <RouteBase>[
+    //Screens with not connected scaffold
     ShellRoute(
       builder: (BuildContext context, GoRouterState state, Widget child) {
         return ForkifyScaffoldNotConnected(body: child);
@@ -23,41 +21,57 @@ final GoRouter router = GoRouter(
       routes: [
         GoRoute(
           path: '/login',
-          builder: (BuildContext context, GoRouterState state) {
-            return LoginScreen();
-          },
+          pageBuilder: (BuildContext context, GoRouterState state) =>
+              NoTransitionPage(
+            child: const LoginScreen(),
+          ),
+        ),
+        GoRoute(
+          path: '/signup',
+          pageBuilder: (BuildContext context, GoRouterState state) =>
+              NoTransitionPage(
+            child: const SignupScreen(),
+          ),
         ),
       ],
     ),
     // Screens with regular scaffold
     ShellRoute(
+      redirect: ((context, state) {
+        final user = FirebaseAuth.instance.currentUser;
+        return user == null ? "/login" : null;
+      }),
       builder: (BuildContext context, GoRouterState state, Widget child) {
         return ForkifyScaffold(body: child);
       },
       routes: [
         GoRoute(
           path: '/',
-          builder: (BuildContext context, GoRouterState state) {
-            return HomeScreen();
-          },
+          pageBuilder: (BuildContext context, GoRouterState state) =>
+              NoTransitionPage(
+            child: const HomeScreen(),
+          ),
         ),
         GoRoute(
           path: '/profile',
-          builder: (BuildContext context, GoRouterState state) {
-            return const ProfileScreen();
-          },
+          pageBuilder: (BuildContext context, GoRouterState state) =>
+              NoTransitionPage(
+            child: const ProfileScreen(),
+          ),
         ),
         GoRoute(
           path: '/statistics',
-          builder: (BuildContext context, GoRouterState state) {
-            return const StatisticsScreen();
-          },
+          pageBuilder: (BuildContext context, GoRouterState state) =>
+              NoTransitionPage(
+            child: const StatisticsScreen(),
+          ),
         ),
         GoRoute(
           path: '/map',
-          builder: (BuildContext context, GoRouterState state) {
-            return const MapScreen();
-          },
+          pageBuilder: (BuildContext context, GoRouterState state) =>
+              NoTransitionPage(
+            child: const MapScreen(),
+          ),
         ),
       ],
     ),

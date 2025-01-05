@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:forkify/res/fonts.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _SignupFormState extends State<SignupForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -25,6 +25,12 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 20),
           TextFormField(
             decoration: InputDecoration(
+              labelText: "Nom d'utilisateur",
+            ),
+          ),
+          SizedBox(height: 20),
+          TextFormField(
+            decoration: InputDecoration(
               labelText: "Mot de passe",
             ),
             obscureText: true,
@@ -34,13 +40,13 @@ class _LoginFormState extends State<LoginForm> {
             child: FilledButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                 minimumSize: Size.fromHeight(50),
+                minimumSize: Size.fromHeight(50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
               child: Text(
-                "Se connecter",
+                "Créer votre compte",
                 style: Fonts.bodyLarge,
               ),
             ),

@@ -1,12 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:forkify/res/fonts.dart';
-import 'package:forkify/view/feature/googleSignIn/google_sign_in.feature.dart';
-import 'package:forkify/view/feature/loginForm/login_form.feature.dart';
+import 'package:forkify/view/feature/signupForm/signup_form.feature.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,42 +18,25 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Connexion",
+              "Création de compte",
               style: Fonts.titleMedium,
             ),
             SizedBox(height: 20),
-            LoginForm(),
-            SizedBox(height: 20),
-            Row(
-              children: <Widget>[
-                Expanded(child: Divider()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "Ou",
-                    style: Fonts.bodyMedium
-                        .apply(color: Theme.of(context).colorScheme.outline),
-                  ),
-                ),
-                Expanded(child: Divider()),
-              ],
-            ),
-            SizedBox(height: 20),
-            GoogleSignIn(),
+            SignupForm(),
             SizedBox(height: 20),
             RichText(
               text: TextSpan(
                 style: Fonts.bodyMedium
                     .apply(color: Theme.of(context).colorScheme.onSurface),
                 children: <TextSpan>[
-                  TextSpan(text: "Pas encore de compte ? "),
+                  TextSpan(text: "Vous avez déjà un compte ? "),
                   TextSpan(
-                    text: "Créer un compte.",
+                    text: "Se connecter.",
                     style:
                         TextStyle(color: Theme.of(context).colorScheme.primary),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        context.go("/signup");
+                        context.go("/login");
                       },
                   ),
                 ],
