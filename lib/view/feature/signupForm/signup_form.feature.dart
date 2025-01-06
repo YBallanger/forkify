@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:forkify/repository/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
-import 'package:go_router/go_router.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
