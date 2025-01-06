@@ -24,7 +24,9 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(),
-        labelStyle: Fonts.bodyMedium
+        labelStyle: Fonts.bodyMedium,
+        errorStyle: Fonts.bodySmall,
+        prefixIconColor: colorScheme.outline
       )
     );
   }
