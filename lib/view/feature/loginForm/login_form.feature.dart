@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forkify/repository/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
 
 class LoginForm extends StatefulWidget {
@@ -10,6 +11,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +21,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
               labelText: "Email",
               prefixIcon: Icon(Icons.mail_outline),
@@ -36,6 +40,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           SizedBox(height: 20),
           TextFormField(
+            controller: _passwordController,
             decoration: InputDecoration(
                 labelText: "Mot de passe",
                 prefixIcon: Icon(Icons.lock_outline)),
@@ -49,11 +54,11 @@ class _LoginFormState extends State<LoginForm> {
           ),
           SizedBox(height: 20),
           FilledButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Processing Data')),
-                );
+                final email = _emailController.text;
+                final password = _passwordController.text;
+                await AuthenticationRepository().signInWithEmail(email, password);
               }
             },
             style: FilledButton.styleFrom(

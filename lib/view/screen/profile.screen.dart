@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forkify/repository/authentication.repository.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -7,6 +8,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("Profile page");
+    return ElevatedButton(onPressed: () {
+      AuthenticationRepository().signOut();
+    }, child: Text("Deconnexion"));
   }
 }

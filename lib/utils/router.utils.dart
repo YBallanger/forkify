@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:forkify/repository/authentication.repository.dart';
 import 'package:forkify/view/feature/scaffold/forkify_scaffold.feature.dart';
 import 'package:forkify/view/feature/scaffold/forkify_scaffold_not_connected.feature.dart';
 import 'package:forkify/view/screen/home.screen.dart';
@@ -15,6 +15,10 @@ final GoRouter router = GoRouter(
   routes: <RouteBase>[
     //Screens with not connected scaffold
     ShellRoute(
+      redirect: ((context, state) {
+        final user = AuthenticationRepository().currentUser;
+        return user == null ? null : "/";
+      }),
       builder: (BuildContext context, GoRouterState state, Widget child) {
         return ForkifyScaffoldNotConnected(body: child);
       },
@@ -38,7 +42,7 @@ final GoRouter router = GoRouter(
     // Screens with regular scaffold
     ShellRoute(
       redirect: ((context, state) {
-        final user = FirebaseAuth.instance.currentUser;
+        final user = AuthenticationRepository().currentUser;
         return user == null ? "/login" : null;
       }),
       builder: (BuildContext context, GoRouterState state, Widget child) {

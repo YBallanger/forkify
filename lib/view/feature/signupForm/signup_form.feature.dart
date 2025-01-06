@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:forkify/repository/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -10,6 +12,17 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +31,7 @@ class _SignupFormState extends State<SignupForm> {
       child: Column(
         children: [
           TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
               labelText: "Email",
               prefixIcon: Icon(Icons.mail_outline),
@@ -36,6 +50,7 @@ class _SignupFormState extends State<SignupForm> {
           ),
           SizedBox(height: 20),
           TextFormField(
+            controller: _usernameController,
             decoration: InputDecoration(
               labelText: "Nom d'utilisateur",
               prefixIcon: Icon(Icons.person_outlined),
@@ -49,6 +64,7 @@ class _SignupFormState extends State<SignupForm> {
           ),
           SizedBox(height: 20),
           TextFormField(
+            controller: _passwordController,
             decoration: InputDecoration(
               labelText: "Mot de passe",
               prefixIcon: Icon(Icons.lock_outline),
@@ -66,25 +82,23 @@ class _SignupFormState extends State<SignupForm> {
             },
           ),
           SizedBox(height: 20),
-          Center(
-            child: FilledButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
-                }
-              },
-              style: FilledButton.styleFrom(
-                minimumSize: Size.fromHeight(50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
+          FilledButton(
+            onPressed: () async {
+              if (_formKey.currentState!.validate()) {
+                final email = _emailController.text;
+                final password = _passwordController.text;
+                await AuthenticationRepository().signUpWithEmail(email, password);
+              }
+            },
+            style: FilledButton.styleFrom(
+              minimumSize: Size.fromHeight(50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
               ),
-              child: Text(
-                "Créer votre compte",
-                style: Fonts.bodyLarge,
-              ),
+            ),
+            child: Text(
+              "Créer votre compte",
+              style: Fonts.bodyLarge,
             ),
           ),
         ],
