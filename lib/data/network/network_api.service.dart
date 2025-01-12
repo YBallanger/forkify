@@ -32,6 +32,7 @@ class ApiServices extends BaseApiService {
             const Duration(seconds: 20),
           );
       responseJson = returnResponse(response);
+      debugPrint(responseJson.toString());
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     }
@@ -40,7 +41,7 @@ class ApiServices extends BaseApiService {
   }
 
   @override
-  Future<http.Response> postApi(String url, Map<String, dynamic> body) async {
+  Future<dynamic> postApi(String url, Map<String, dynamic> body) async {
     dynamic responseJson;
     final User? currentUser = FirebaseAuth.instance.currentUser;
     final String? idToken = await currentUser?.getIdToken();
@@ -69,11 +70,15 @@ class ApiServices extends BaseApiService {
   dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
-        var jsonResponse = jsonDecode(response.body);
-        return jsonResponse;
+      case 201:
       case 400:
-        var jsonResponse = jsonDecode(response.body);
-        return jsonResponse;
+        if(response.body.isNotEmpty) {
+          var jsonResponse = jsonDecode(response.body);
+          return jsonResponse;
+        } else {
+          return null;
+        }
+
       default:
         throw FetchDataException(
             'Error while Communication ${response.statusCode}');

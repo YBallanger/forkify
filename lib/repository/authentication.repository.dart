@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:forkify/data/network/base_api.service.dart';
 import 'package:forkify/data/network/network_api.service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -23,22 +22,31 @@ class AuthenticationRepository {
     }
   }
 
-  Future<User?> signUp(String email, String username, String password) async {
+  Future<void> signUp(String email, String username, String password) async {
+  try {
+    final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    await ApiServices().postApi("http://localhost:8080/users", {
+      "userId": userCredential.user!.uid,
+      "email": userCredential.user!.email,
+      "username": username,
+    }); 
+  } catch (e) {
+    debugPrint('Error during sign up or backend request: $e');
+    
     try {
-      return await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((userCredential) async {
-        await ApiServices().postApi("http://localhost:8080/users", {
-          "userId": userCredential.user!.uid,
-          "email": userCredential.user!.email,
-          "username": username,
-        });
-        return userCredential.user;
-      });
-    } catch (e) {
-      debugPrint('Error during sign up: $e');
+      await _firebaseAuth.currentUser?.delete();
+    } catch (deleteError) {
+      debugPrint('Failed to delete user from Firebase: $deleteError');
     }
+
+    rethrow;
   }
+}
+
 
   Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
