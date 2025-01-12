@@ -1,26 +1,72 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:forkify/data/app_exceptions.dart';
 import 'package:forkify/data/network/base_api.service.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices extends BaseApiService {
   @override
-  Future get(String url) async {
-    dynamic jsonData;
-    try {
-      var response = await http.get(Uri.parse(url)).timeout(
-          const Duration(seconds: 10));
-      jsonData = jsonResponse(response);
-    } on SocketException {
-      throw InternetException('No Internet');
-    } on RequestTimeOut {
-      throw RequestTimeOut('Request Timeout');
+  Future getApi(String url,
+      {Map<String, dynamic>? pathParams,
+      Map<String, dynamic>? queryParams}) async {
+    if (pathParams != null) {
+      pathParams.forEach((key, value) {
+        url = url.replaceAll('{$key}', value.toString());
+      });
     }
-    return jsonData;
+
+    if (queryParams != null) {
+      final queryString = Uri(queryParameters: queryParams).query;
+      if (queryString.isNotEmpty) {
+        url = '$url?$queryString';
+      }
+    }
+
+    final headers = {"Accept": "application/json"};
+    dynamic responseJson;
+
+    try {
+      final response = await http.get(Uri.parse(url), headers: headers).timeout(
+            const Duration(seconds: 20),
+          );
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    }
+
+    return responseJson;
   }
 
-  dynamic jsonResponse(http.Response response) {
+  @override
+  Future<http.Response> postApi(String url, Map<String, dynamic> body) async {
+    dynamic responseJson;
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final String? idToken = await currentUser?.getIdToken();
+
+    final headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
+
+    if (idToken != null) {
+      headers[HttpHeaders.authorizationHeader] = idToken;
+    }
+
+    try {
+      final response = await http
+          .post(Uri.parse(url), body: json.encode(body), headers: headers)
+          .timeout(const Duration(seconds: 30));
+      return responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    } catch (e) {
+      debugPrint('error$e');
+    }
+    return responseJson;
+  }
+
+  dynamic returnResponse(http.Response response) {
     switch (response.statusCode) {
       case 200:
         var jsonResponse = jsonDecode(response.body);
@@ -33,6 +79,4 @@ class ApiServices extends BaseApiService {
             'Error while Communication ${response.statusCode}');
     }
   }
-
-
 }

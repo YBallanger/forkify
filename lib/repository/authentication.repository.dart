@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:forkify/data/network/base_api.service.dart';
+import 'package:forkify/data/network/network_api.service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository {
@@ -15,21 +18,25 @@ class AuthenticationRepository {
       );
       return userCredential.user;
     } catch (e) {
-      print('Error during sign in: $e');
+      debugPrint('Error during sign in: $e');
       rethrow;
     }
   }
 
-  Future<User?> signUpWithEmail(String email, String password) async {
+  Future<User?> signUp(String email, String username, String password) async {
     try {
-      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return userCredential.user;
+      return await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((userCredential) async {
+        await ApiServices().postApi("http://localhost:8080/users", {
+          "userId": userCredential.user!.uid,
+          "email": userCredential.user!.email,
+          "username": username,
+        });
+        return userCredential.user;
+      });
     } catch (e) {
-      print('Error during sign up: $e');
-      rethrow;
+      debugPrint('Error during sign up: $e');
     }
   }
 

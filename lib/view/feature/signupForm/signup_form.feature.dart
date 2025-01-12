@@ -86,7 +86,8 @@ class _SignupFormState extends State<SignupForm> {
               if (_formKey.currentState!.validate()) {
                 final email = _emailController.text;
                 final password = _passwordController.text;
-                await AuthenticationRepository().signUpWithEmail(email, password);
+                final username = _usernameController.text;
+                await AuthenticationRepository().signUp(email, username, password);
               }
             },
             style: FilledButton.styleFrom(
