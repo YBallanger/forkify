@@ -23,42 +23,61 @@ class AuthenticationRepository {
   }
 
   Future<void> signUp(String email, String username, String password) async {
-  try {
-    final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-
-    await ApiServices().postApi("http://localhost:8080/users", {
-      "userId": userCredential.user!.uid,
-      "email": userCredential.user!.email,
-      "username": username,
-    }); 
-  } catch (e) {
-    debugPrint('Error during sign up or backend request: $e');
-    
     try {
-      await _firebaseAuth.currentUser?.delete();
-    } catch (deleteError) {
-      debugPrint('Failed to delete user from Firebase: $deleteError');
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await ApiServices().postApi("http://localhost:8080/users", {
+        "userId": userCredential.user!.uid,
+        "email": userCredential.user!.email,
+        "username": username,
+      });
+    } catch (e) {
+      debugPrint('Error during sign up or backend request: $e');
+
+      try {
+        await _firebaseAuth.currentUser?.delete();
+      } catch (deleteError) {
+        debugPrint('Failed to delete user from Firebase: $deleteError');
+      }
+
+      rethrow;
     }
-
-    rethrow;
   }
-}
 
+  Future<void> signInWithGoogle() async {
+    // Google connexion
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
 
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+      await ApiServices().postApi("http://localhost:8080/users", {
+        "userId": userCredential.user!.uid,
+        "email": userCredential.user!.email,
+        "username": userCredential.user!.displayName,
+      });
+    } catch (e) {
+      debugPrint('Error during sign up or backend request: $e');
+
+      try {
+        await _firebaseAuth.currentUser?.delete();
+      } catch (deleteError) {
+        debugPrint('Failed to delete user from Firebase: $deleteError');
+      }
+
+      rethrow;
+    }
   }
 
   Future<void> signOut() async {

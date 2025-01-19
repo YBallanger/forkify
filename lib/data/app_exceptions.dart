@@ -1,7 +1,13 @@
 class AppExceptions implements Exception{
-  String? _prefix;
-  String? _message;
+  final String? _prefix;
+  final String? _message;
+  
   AppExceptions([this._prefix,this._message]);
+
+  @override
+  String toString() {
+    return '$_prefix$_message';
+  }
 }
 
 class InternetException extends AppExceptions{
