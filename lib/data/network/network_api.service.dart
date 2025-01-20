@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:forkify/data/app_exceptions.dart';
 import 'package:forkify/data/network/base_api.service.dart';
+import 'package:forkify/environment.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServices extends BaseApiService {
@@ -28,7 +29,7 @@ class ApiServices extends BaseApiService {
     dynamic responseJson;
 
     try {
-      final response = await http.get(Uri.parse(url), headers: headers).timeout(
+      final response = await http.get(Uri.parse("${Environment.restApiUrl}$url"), headers: headers).timeout(
             const Duration(seconds: 20),
           );
       responseJson = returnResponse(response);
@@ -56,7 +57,7 @@ class ApiServices extends BaseApiService {
 
     try {
       final response = await http
-          .post(Uri.parse(url), body: json.encode(body), headers: headers)
+          .post(Uri.parse("${Environment.restApiUrl}$url"), body: json.encode(body), headers: headers)
           .timeout(const Duration(seconds: 30));
       return responseJson = returnResponse(response);
     } on SocketException {

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:forkify/data/network/network_api.service.dart';
+import 'package:forkify/model/user.model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository {
@@ -29,11 +30,10 @@ class AuthenticationRepository {
         password: password,
       );
 
-      await ApiServices().postApi("http://localhost:8080/users", {
-        "userId": userCredential.user!.uid,
-        "email": userCredential.user!.email,
-        "username": username,
-      });
+      UserModel user = UserModel(
+          userId: userCredential.user!.uid, email: email, username: username);
+
+      await ApiServices().postApi("/users", user.toMap());
     } catch (e) {
       debugPrint('Error during sign up or backend request: $e');
 
@@ -48,7 +48,6 @@ class AuthenticationRepository {
   }
 
   Future<void> signInWithGoogle() async {
-    // Google connexion
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -62,11 +61,9 @@ class AuthenticationRepository {
       final userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      await ApiServices().postApi("http://localhost:8080/users", {
-        "userId": userCredential.user!.uid,
-        "email": userCredential.user!.email,
-        "username": userCredential.user!.displayName,
-      });
+      UserModel user = UserModel(
+          userId: userCredential.user!.uid, email: userCredential.user!.uid, username: userCredential.user!.displayName ?? "Utilisateur");
+      await ApiServices().postApi("/users", user.toMap());
     } catch (e) {
       debugPrint('Error during sign up or backend request: $e');
 
