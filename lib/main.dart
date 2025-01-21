@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:forkify/firebase_options.dart';
 import 'package:forkify/res/theme/app_theme.dart';
 import 'package:forkify/utils/router.utils.dart';
+import 'package:forkify/viewModel/authentication.view_model.dart';
 import 'package:forkify/viewModel/user_statistics.view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => UserStatisticsViewModel()),
+      ChangeNotifierProvider(create: (_) => AuthenticationViewModel()),
     ],
     child: MainApp(),
   ));

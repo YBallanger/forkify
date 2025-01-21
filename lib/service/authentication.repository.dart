@@ -5,10 +5,7 @@ import 'package:forkify/model/user.model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository {
-  final FirebaseAuth _firebaseAuth;
-
-  AuthenticationRepository({FirebaseAuth? firebaseAuth})
-      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<User?> signInWithEmail(String email, String password) async {
     try {

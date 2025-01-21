@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forkify/repository/authentication.repository.dart';
+import 'package:forkify/service/authentication.repository.dart';
 import 'package:forkify/view/feature/scaffold/forkify_scaffold.feature.dart';
 import 'package:forkify/view/feature/scaffold/forkify_scaffold_not_connected.feature.dart';
 import 'package:forkify/view/screen/home.screen.dart';
@@ -8,7 +8,9 @@ import 'package:forkify/view/screen/map.screen.dart';
 import 'package:forkify/view/screen/profile.screen.dart';
 import 'package:forkify/view/screen/signup.screen.dart';
 import 'package:forkify/view/screen/statistics.screen.dart';
+import 'package:forkify/viewModel/authentication.view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -16,8 +18,12 @@ final GoRouter router = GoRouter(
     //Screens with not connected scaffold
     ShellRoute(
       redirect: ((context, state) {
-        final user = AuthenticationRepository().currentUser;
-        return user == null ? null : "/";
+        final authState =
+            Provider.of<AuthenticationViewModel>(context, listen: false);
+        if (authState.isLoading) {
+          return null;
+        }
+        return authState.currentUser == null ? null : "/";
       }),
       builder: (BuildContext context, GoRouterState state, Widget child) {
         return ForkifyScaffoldNotConnected(body: child);
@@ -42,8 +48,12 @@ final GoRouter router = GoRouter(
     // Screens with regular scaffold
     ShellRoute(
       redirect: ((context, state) {
-        final user = AuthenticationRepository().currentUser;
-        return user == null ? "/login" : null;
+        final authState =
+            Provider.of<AuthenticationViewModel>(context, listen: false);
+        if (authState.isLoading) {
+          return null;
+        }
+        return authState.currentUser == null ? "/login" : null;
       }),
       builder: (BuildContext context, GoRouterState state, Widget child) {
         return ForkifyScaffold(body: child);

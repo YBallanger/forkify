@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forkify/repository/authentication.repository.dart';
+import 'package:forkify/service/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
 
 class ProfileScreen extends StatelessWidget {

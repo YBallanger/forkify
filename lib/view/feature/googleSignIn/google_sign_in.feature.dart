@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:forkify/repository/authentication.repository.dart';
+import 'package:forkify/service/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
 
 class GoogleSignIn extends StatelessWidget {
