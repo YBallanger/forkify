@@ -6,7 +6,7 @@ const lightColorScheme = ColorScheme(
   onPrimary: Color(0xffffffff),
   secondary: Color(0xffc4a9a1),
   onSecondary: Color(0xff141212),
-  error: Color.fromARGB(255, 204, 25, 25),
+  error: Color.fromARGB(255, 227, 25, 25),
   onError: Color.fromARGB(255, 28, 27, 27),
   surface: Color(0xfff5f1ef),
   onSurface: Color(0xff000000),
