@@ -29,11 +29,12 @@ class ApiServices extends BaseApiService {
     dynamic responseJson;
 
     try {
-      final response = await http.get(Uri.parse("${Environment.restApiUrl}$url"), headers: headers).timeout(
+      final response = await http
+          .get(Uri.parse("${Environment.restApiUrl}$url"), headers: headers)
+          .timeout(
             const Duration(seconds: 20),
           );
       responseJson = returnResponse(response);
-      debugPrint(responseJson.toString());
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     }
@@ -57,15 +58,15 @@ class ApiServices extends BaseApiService {
 
     try {
       final response = await http
-          .post(Uri.parse("${Environment.restApiUrl}$url"), body: json.encode(body), headers: headers)
+          .post(Uri.parse("${Environment.restApiUrl}$url"),
+              body: json.encode(body), headers: headers)
           .timeout(const Duration(seconds: 30));
       return responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet Connection');
     } catch (e) {
-      debugPrint('error$e');
+      throw Exception();
     }
-    return responseJson;
   }
 
   dynamic returnResponse(http.Response response) {
@@ -73,7 +74,7 @@ class ApiServices extends BaseApiService {
       case 200:
       case 201:
       case 400:
-        if(response.body.isNotEmpty) {
+        if (response.body.isNotEmpty) {
           var jsonResponse = jsonDecode(response.body);
           return jsonResponse;
         } else {
