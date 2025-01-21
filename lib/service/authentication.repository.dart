@@ -15,7 +15,6 @@ class AuthenticationRepository {
       );
       return userCredential.user;
     } catch (e) {
-      debugPrint('Error during sign in: $e');
       rethrow;
     }
   }
