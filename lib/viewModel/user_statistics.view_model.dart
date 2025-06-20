@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:forkify/model/user_statistics.model.dart';
+import 'package:forkify/model/dto/user_statistics.dto.dart';
 
 class UserStatisticsViewModel extends ChangeNotifier {
-  UserStatisticsModel? _userStatistics;
+  UserStatisticsDTO? _userStatistics;
   bool _isLoading = false;
 
-  UserStatisticsModel? get userStatistics => _userStatistics;
+  UserStatisticsDTO? get userStatistics => _userStatistics;
   bool get isLoading => _isLoading;
 
   Future<void> fetchUserStatistics() async {
@@ -20,7 +20,7 @@ class UserStatisticsViewModel extends ChangeNotifier {
         "numberOfNewRestaurants": 5,
       };
 
-      _userStatistics = UserStatisticsModel.fromMap(data);
+      _userStatistics = UserStatisticsDTO.fromMap(data);
     } catch (error) {
       debugPrint('Erreur lors de la récupération des données : $error');
     } finally {

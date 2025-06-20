@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:forkify/service/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
+import 'package:forkify/service/authentication.service.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -17,14 +17,13 @@ class ProfileScreen extends StatelessWidget {
           children: [
             FilledButton(
               onPressed: () {
-                AuthenticationRepository().signOut();
+                AuthenticationService().signOut();
               },
               style: FilledButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                backgroundColor: Theme.of(context).colorScheme.error
-              ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  backgroundColor: Theme.of(context).colorScheme.error),
               child: Text(
                 "Se déconnecter",
                 style: Fonts.bodyLarge,

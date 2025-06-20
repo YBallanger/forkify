@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:forkify/service/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
+import 'package:forkify/service/authentication.service.dart';
 
 class GoogleSignIn extends StatelessWidget {
   const GoogleSignIn({super.key});
@@ -10,7 +10,7 @@ class GoogleSignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: () async {
-        await AuthenticationRepository().signInWithGoogle();
+        await AuthenticationService().signInWithGoogle();
       },
       style: ElevatedButton.styleFrom(
         minimumSize: Size.fromHeight(60),

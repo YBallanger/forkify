@@ -4,7 +4,7 @@ import 'package:forkify/data/network/network_api.service.dart';
 import 'package:forkify/model/user.model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthenticationRepository {
+class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<User?> signInWithEmail(String email, String password) async {
@@ -58,7 +58,9 @@ class AuthenticationRepository {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       UserModel user = UserModel(
-          userId: userCredential.user!.uid, email: userCredential.user!.uid, username: userCredential.user!.displayName ?? "Utilisateur");
+          userId: userCredential.user!.uid,
+          email: userCredential.user!.uid,
+          username: userCredential.user!.displayName ?? "Utilisateur");
       await ApiServices().postApi("/users", user.toMap());
     } catch (e) {
       debugPrint('Error during sign up or backend request: $e');

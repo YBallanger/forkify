@@ -1,22 +1,22 @@
 import 'dart:convert';
 
-class UserStatisticsModel {
+class UserStatisticsDTO {
   double amountSpent;
   int numberOfVisits;
   int numberOfNewRestaurants;
 
-  UserStatisticsModel({
+  UserStatisticsDTO({
     required this.amountSpent,
     required this.numberOfVisits,
     required this.numberOfNewRestaurants,
   });
 
-  UserStatisticsModel copyWith({
+  UserStatisticsDTO copyWith({
     double? amountSpent,
     int? numberOfVisits,
     int? numberOfNewRestaurants,
   }) {
-    return UserStatisticsModel(
+    return UserStatisticsDTO(
       amountSpent: amountSpent ?? this.amountSpent,
       numberOfVisits: numberOfVisits ?? this.numberOfVisits,
       numberOfNewRestaurants:
@@ -32,8 +32,8 @@ class UserStatisticsModel {
     };
   }
 
-  factory UserStatisticsModel.fromMap(Map<String, dynamic> map) {
-    return UserStatisticsModel(
+  factory UserStatisticsDTO.fromMap(Map<String, dynamic> map) {
+    return UserStatisticsDTO(
       amountSpent: map['amountSpent'] as double,
       numberOfVisits: map['numberOfVisits'] as int,
       numberOfNewRestaurants: map['numberOfNewRestaurants'] as int,
@@ -42,15 +42,15 @@ class UserStatisticsModel {
 
   String toJson() => json.encode(toMap());
 
-  factory UserStatisticsModel.fromJson(String source) =>
-      UserStatisticsModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserStatisticsDTO.fromJson(String source) =>
+      UserStatisticsDTO.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() =>
-      'UserStatisticsModel(amountSpent: $amountSpent, numberOfVisits: $numberOfVisits, numberOfNewRestaurants: $numberOfNewRestaurants)';
+      'UserStatisticsDTO(amountSpent: $amountSpent, numberOfVisits: $numberOfVisits, numberOfNewRestaurants: $numberOfNewRestaurants)';
 
   @override
-  bool operator ==(covariant UserStatisticsModel other) {
+  bool operator ==(covariant UserStatisticsDTO other) {
     if (identical(this, other)) return true;
 
     return other.amountSpent == amountSpent &&
