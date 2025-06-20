@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:forkify/service/authentication.repository.dart';
 import 'package:forkify/view/feature/scaffold/forkify_scaffold.feature.dart';
 import 'package:forkify/view/feature/scaffold/forkify_scaffold_not_connected.feature.dart';
 import 'package:forkify/view/screen/home.screen.dart';

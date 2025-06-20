@@ -19,15 +19,14 @@ class AppTheme {
         selectedLabelStyle: Fonts.bodyMedium,
         unselectedLabelStyle: Fonts.bodyMedium,
       ),
-      dividerTheme: DividerThemeData(
-        color: colorScheme.outline
-      ),
+      dividerTheme: DividerThemeData(color: colorScheme.outline),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         labelStyle: Fonts.bodyMedium,
         errorStyle: Fonts.bodySmall,
-        prefixIconColor: colorScheme.outline
-      )
+        prefixIconColor: colorScheme.outline,
+        suffixIconColor: colorScheme.outline,
+      ),
     );
   }
 

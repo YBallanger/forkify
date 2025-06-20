@@ -1,1 +1,33 @@
 include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Règles pour améliorer la qualité du code
+    - avoid_empty_else
+    - avoid_null_checks_in_equality_operators
+    - avoid_print
+    - camel_case_extensions
+    - constant_identifier_names
+    - curly_braces_in_flow_control_structures
+    - always_specify_types
+    - annotate_overrides
+    - prefer_final_fields
+    - prefer_typing_uninitialized_variables
+
+    # Règles pour améliorer les performances
+    - avoid_redundant_argument_values
+    - prefer_const_constructors
+    - prefer_const_literals_to_create_immutables
+    - use_key_in_widget_constructors
+    - prefer_final_in_for_each
+
+    # Règles de style
+    - always_declare_return_types
+    - prefer_single_quotes
+    - sort_constructors_first
+
+    # Règles pour éviter les mauvaises pratiques
+    - avoid_unnecessary_containers
+    - avoid_setters_without_getters
+    - unnecessary_this
+    - prefer_is_not_empty

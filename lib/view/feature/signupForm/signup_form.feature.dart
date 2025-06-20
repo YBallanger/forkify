@@ -1,8 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:forkify/service/authentication.repository.dart';
 import 'package:forkify/res/fonts.dart';
-import 'package:forkify/utils/popup/error_popup.utils.dart';
 import 'package:forkify/utils/popup/show_dialog.utils.dart';
 import 'package:forkify/viewModel/authentication.view_model.dart';
 import 'package:go_router/go_router.dart';

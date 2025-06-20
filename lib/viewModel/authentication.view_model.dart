@@ -1,16 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:forkify/service/authentication.repository.dart';
+import 'package:forkify/service/authentication.service.dart';
 
 class AuthenticationViewModel extends ChangeNotifier {
-
-
   String? _errorMessage;
   bool _isLoading = false;
 
   String? get errorMessage => _errorMessage;
   bool get isLoading => _isLoading;
-  User? get currentUser => AuthenticationRepository().currentUser;
+  User? get currentUser => AuthenticationService().currentUser;
 
   void _setLoading(bool value) {
     _isLoading = value;
@@ -31,7 +29,7 @@ class AuthenticationViewModel extends ChangeNotifier {
     _setLoading(true);
 
     try {
-      await AuthenticationRepository().signInWithEmail(email, password);
+      await AuthenticationService().signInWithEmail(email, password);
       _setLoading(false);
     } on FirebaseAuthException catch (exception) {
       switch (exception.code) {
@@ -58,7 +56,7 @@ class AuthenticationViewModel extends ChangeNotifier {
     _setLoading(true);
 
     try {
-      await AuthenticationRepository().signUp(email, username, password);
+      await AuthenticationService().signUp(email, username, password);
       _setLoading(false);
     } on FirebaseAuthException catch (exception) {
       switch (exception.code) {
