@@ -25,14 +25,14 @@ class ShowDialog {
   }
 
   static void showLoadingDialog({required BuildContext context}) {
-    Future.microtask(() => {
+    Future.microtask(() => <Set<Future>>{
           if (context.mounted)
             {
               showDialog(
                 context: context,
                 barrierDismissible: false,
                 builder: (context) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 },

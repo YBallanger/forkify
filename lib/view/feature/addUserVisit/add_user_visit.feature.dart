@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:forkify/model/dto/user_visit_create.dto.dart';
 import 'package:forkify/res/fonts.dart';
+import 'package:forkify/utils/popup/show_dialog.utils.dart';
 import 'package:forkify/view/feature/addUserVisit/add_user_visit_form.widget.dart';
 import 'package:forkify/viewModel/authentication.view_model.dart';
 import 'package:forkify/viewModel/user_visit_view_model.dart';
+import 'package:provider/provider.dart';
 
 class AddUserVisit extends StatefulWidget {
   const AddUserVisit({super.key});
@@ -18,32 +20,21 @@ class _AddUserVisitState extends State<AddUserVisit> {
       TextEditingController();
   final TextEditingController _priceController = TextEditingController();
 
-  void handleSubmit(double rating) {
+  Future<void> handleSubmit(double rating) async {
+    final UserVisitViewModel userVisitViewModel =
+        context.read<UserVisitViewModel>();
     if (_formKey.currentState?.validate() ?? false) {
       final String restaurantName = _restaurantNameController.text;
       final String priceText = _priceController.text.replaceAll(',', '.');
       final double price = double.parse(priceText);
 
       UserVisitCreateDTO userVisitCreateDTO = UserVisitCreateDTO(
-          userId: AuthenticationViewModel().currentUser!.uid,
-          restaurantName: restaurantName,
-          amountSpent: price,
-          rating: rating);
-      UserVisitViewModel().createUserVisit(userVisitCreateDTO);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Expérience ajoutée avec succès !'),
-          backgroundColor: Colors.green,
-        ),
+        userId: AuthenticationViewModel().currentUser!.uid,
+        restaurantName: restaurantName,
+        amountSpent: price,
+        rating: rating,
       );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Veuillez corriger les erreurs du formulaire'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      await userVisitViewModel.createUserVisit(userVisitCreateDTO);
     }
   }
 
@@ -59,17 +50,34 @@ class _AddUserVisitState extends State<AddUserVisit> {
           backgroundColor: Theme.of(context).colorScheme.surface,
           builder: (BuildContext builder) {
             double rating = 0.0;
+
             return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setModalState) {
+              final UserVisitViewModel userVisitViewModel =
+                  context.watch<UserVisitViewModel>();
               return AddUserVisitForm(
                 formKey: _formKey,
                 restaurantNameController: _restaurantNameController,
                 priceController: _priceController,
                 rating: rating,
+                isLoading: userVisitViewModel.isLoading,
                 onRatingChanged: (double newRating) => setModalState(() {
                   rating = newRating;
                 }),
-                onSubmit: () => handleSubmit(rating),
+                onSubmit: () async => {
+                  await handleSubmit(rating),
+                  if (context.mounted && !userVisitViewModel.isError)
+                    {
+                      Navigator.pop(context),
+                    }
+                  else
+                    {
+                      ShowDialog.showErrorDialog(
+                          context: context,
+                          errorMessage:
+                              'Un problème est survenu lors de la création d\'expérience. Veuillez réessayer plus tard.')
+                    }
+                },
               );
             });
           },

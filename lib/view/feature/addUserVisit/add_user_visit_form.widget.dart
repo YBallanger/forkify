@@ -10,6 +10,7 @@ class AddUserVisitForm extends StatelessWidget {
     required this.restaurantNameController,
     required this.priceController,
     required this.rating,
+    required this.isLoading,
     required this.onRatingChanged,
     required this.onSubmit,
   });
@@ -18,6 +19,7 @@ class AddUserVisitForm extends StatelessWidget {
   final TextEditingController restaurantNameController;
   final TextEditingController priceController;
   final double rating;
+  final bool isLoading;
   final ValueChanged<double> onRatingChanged;
   final VoidCallback onSubmit;
 
@@ -91,18 +93,23 @@ class AddUserVisitForm extends StatelessWidget {
                   const Spacer(
                     flex: 2,
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: onSubmit,
-                      child: Text(
-                        "Valider",
-                        textAlign: TextAlign.center,
-                        style: Fonts.subtitleMedium.apply(
-                            color: Theme.of(context).colorScheme.onPrimary),
-                      ),
-                    ),
-                  )
+                  isLoading
+                      ? CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                      : SizedBox(
+                          width: double.infinity,
+                          child: FilledButton(
+                            onPressed: onSubmit,
+                            child: Text(
+                              'Valider',
+                              textAlign: TextAlign.center,
+                              style: Fonts.subtitleMedium.apply(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                            ),
+                          ),
+                        )
                 ],
               ),
             ),
