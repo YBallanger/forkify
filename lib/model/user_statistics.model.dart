@@ -1,22 +1,22 @@
 import 'dart:convert';
 
-class UserStatisticsDTO {
+class UserStatisticsModel {
   double amountSpent;
   int numberOfVisits;
   int numberOfNewRestaurants;
 
-  UserStatisticsDTO({
+  UserStatisticsModel({
     required this.amountSpent,
     required this.numberOfVisits,
     required this.numberOfNewRestaurants,
   });
 
-  UserStatisticsDTO copyWith({
+  UserStatisticsModel copyWith({
     double? amountSpent,
     int? numberOfVisits,
     int? numberOfNewRestaurants,
   }) {
-    return UserStatisticsDTO(
+    return UserStatisticsModel(
       amountSpent: amountSpent ?? this.amountSpent,
       numberOfVisits: numberOfVisits ?? this.numberOfVisits,
       numberOfNewRestaurants:
@@ -32,8 +32,8 @@ class UserStatisticsDTO {
     };
   }
 
-  factory UserStatisticsDTO.fromMap(Map<String, dynamic> map) {
-    return UserStatisticsDTO(
+  factory UserStatisticsModel.fromMap(Map<String, dynamic> map) {
+    return UserStatisticsModel(
       amountSpent: map['amountSpent'] as double,
       numberOfVisits: map['numberOfVisits'] as int,
       numberOfNewRestaurants: map['numberOfNewRestaurants'] as int,
@@ -42,15 +42,15 @@ class UserStatisticsDTO {
 
   String toJson() => json.encode(toMap());
 
-  factory UserStatisticsDTO.fromJson(String source) =>
-      UserStatisticsDTO.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserStatisticsModel.fromJson(String source) =>
+      UserStatisticsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() =>
-      'UserStatisticsDTO(amountSpent: $amountSpent, numberOfVisits: $numberOfVisits, numberOfNewRestaurants: $numberOfNewRestaurants)';
+      'UserStatisticsModel(amountSpent: $amountSpent, numberOfVisits: $numberOfVisits, numberOfNewRestaurants: $numberOfNewRestaurants)';
 
   @override
-  bool operator ==(covariant UserStatisticsDTO other) {
+  bool operator ==(covariant UserStatisticsModel other) {
     if (identical(this, other)) return true;
 
     return other.amountSpent == amountSpent &&

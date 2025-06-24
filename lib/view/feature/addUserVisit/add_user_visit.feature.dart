@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forkify/model/dto/user_visit_create.dto.dart';
+import 'package:forkify/model/user_visit_create.model.dart';
 import 'package:forkify/res/fonts.dart';
 import 'package:forkify/utils/popup/show_dialog.utils.dart';
 import 'package:forkify/view/feature/addUserVisit/add_user_visit_form.widget.dart';
@@ -28,7 +28,7 @@ class _AddUserVisitState extends State<AddUserVisit> {
       final String priceText = _priceController.text.replaceAll(',', '.');
       final double price = double.parse(priceText);
 
-      UserVisitCreateDTO userVisitCreateDTO = UserVisitCreateDTO(
+      UserVisitCreateModel userVisitCreateDTO = UserVisitCreateModel(
         userId: AuthenticationViewModel().currentUser!.uid,
         restaurantName: restaurantName,
         amountSpent: price,

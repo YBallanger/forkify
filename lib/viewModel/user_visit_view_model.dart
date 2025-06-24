@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:forkify/model/dto/user_visit_create.dto.dart';
+import 'package:forkify/model/user_visit_create.model.dart';
 import 'package:forkify/service/user_visit.service.dart';
 
 class UserVisitViewModel extends ChangeNotifier {
@@ -9,10 +9,9 @@ class UserVisitViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get isError => _isError;
 
-  Future<void> createUserVisit(UserVisitCreateDTO userVisitCreateDTO) async {
+  Future<void> createUserVisit(UserVisitCreateModel userVisitCreateDTO) async {
     _isLoading = true;
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 2));
     try {
       UserVisitService().createUserVisit(userVisitCreateDTO);
     } catch (error) {

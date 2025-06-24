@@ -14,18 +14,16 @@ class SomeStatsCard extends StatefulWidget {
 
 class _SomeStatsCardState extends State<SomeStatsCard>
     with SingleTickerProviderStateMixin {
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final userStatisticsViewModel = context.read<UserStatisticsViewModel>();
+      final UserStatisticsViewModel userStatisticsViewModel =
+          context.read<UserStatisticsViewModel>();
       userStatisticsViewModel.fetchUserStatistics();
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +42,8 @@ class _SomeStatsCardState extends State<SomeStatsCard>
         children: <Widget>[
           Text(
             "Quelques statistiques",
-            style: Fonts.titleMedium.apply(
-                color: Theme.of(context).colorScheme.onPrimaryContainer),
+            style: Fonts.titleMedium
+                .apply(color: Theme.of(context).colorScheme.onPrimaryContainer),
           ),
           SizedBox(height: 20),
           SomeStatsCardItem(
@@ -100,12 +98,12 @@ class _SomeStatsCardState extends State<SomeStatsCard>
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer),
                       children: <TextSpan>[
-                        TextSpan(text: "Vous avez découvert "),
+                        TextSpan(text: "Vous êtes allé dans "),
                         TextSpan(
                             text:
                                 "${userStatisticsViewModel.userStatistics?.numberOfNewRestaurants ?? 0}",
                             style: Fonts.boldBodyMedium),
-                        TextSpan(text: " nouveaux restaurants !"),
+                        TextSpan(text: " restaurants différents !"),
                       ],
                     ),
                   ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:forkify/data/app_exceptions.dart';
 import 'package:forkify/data/network/base_api.service.dart';
 import 'package:forkify/environment.dart';
@@ -12,6 +12,9 @@ class ApiServices extends BaseApiService {
   Future getApi(String url,
       {Map<String, dynamic>? pathParams,
       Map<String, dynamic>? queryParams}) async {
+    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final String? idToken = await currentUser?.getIdToken();
+
     if (pathParams != null) {
       pathParams.forEach((key, value) {
         url = url.replaceAll('{$key}', value.toString());
@@ -26,6 +29,10 @@ class ApiServices extends BaseApiService {
     }
 
     final headers = {"Accept": "application/json"};
+
+    if (idToken != null) {
+      headers[HttpHeaders.authorizationHeader] = idToken;
+    }
     dynamic responseJson;
 
     try {
