@@ -1,61 +1,63 @@
-import 'dart:convert';
-
 class UserModel {
-  String userId;
+  String id;
   String email;
   String username;
+
+//<editor-fold desc="Data Methods">
   UserModel({
-    required this.userId,
+    required this.id,
     required this.email,
     required this.username,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          email == other.email &&
+          username == other.username);
+
+  @override
+  int get hashCode => id.hashCode ^ email.hashCode ^ username.hashCode;
+
+  @override
+  String toString() {
+    return 'UserModel{' +
+        ' id: $id,' +
+        ' email: $email,' +
+        ' username: $username,' +
+        '}';
+  }
+
   UserModel copyWith({
-    String? userId,
+    String? id,
     String? email,
     String? username,
   }) {
     return UserModel(
-      userId: userId ?? this.userId,
+      id: id ?? this.id,
       email: email ?? this.email,
       username: username ?? this.username,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'userId': userId,
-      'email': email,
-      'username': username,
+    return {
+      'id': this.id,
+      'email': this.email,
+      'username': this.username,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      userId: map['userId'] as String,
+      id: map['id'] as String,
       email: map['email'] as String,
       username: map['username'] as String,
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() => 'UserModel(userId: $userId, email: $email, username: $username)';
-
-  @override
-  bool operator ==(covariant UserModel other) {
-    if (identical(this, other)) return true;
-  
-    return 
-      other.userId == userId &&
-      other.email == email &&
-      other.username == username;
-  }
-
-  @override
-  int get hashCode => userId.hashCode ^ email.hashCode ^ username.hashCode;
+//</editor-fold>
 }
-

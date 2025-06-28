@@ -50,11 +50,12 @@ class _LoginFormState extends State<LoginForm> {
         hideLoadingDialog(context);
       }
       if (viewModel.errorMessage != null) {
-        ShowDialog.showErrorDialog(
+        ShowDialog.showModalDialog(
+            title: "Erreur",
             context: context,
-            errorMessage: viewModel.errorMessage!,
+            message: viewModel.errorMessage!,
             onClose: () => {
-                  viewModel.resetMessage(),
+                  viewModel.resetErrorMessage(),
                 });
       }
       return Form(

@@ -7,14 +7,9 @@ class UserService {
 
   Future<UserStatisticsModel> getConnectedUserStatistics() async {
     try {
-      User? user = _firebaseAuth.currentUser;
-      if (user != null) {
-        UserStatisticsModel userStatisticsModel = UserStatisticsModel.fromMap(
-            await ApiServices().getApi("/users/${user.uid}/statistics"));
-        return userStatisticsModel;
-      } else {
-        throw (new Error());
-      }
+      UserStatisticsModel userStatisticsModel = UserStatisticsModel.fromMap(
+          await ApiServices().getApi("/users/statistics"));
+      return userStatisticsModel;
     } catch (e) {
       rethrow;
     }

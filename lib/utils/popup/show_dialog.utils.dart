@@ -4,9 +4,10 @@ import 'package:forkify/utils/popup/error_popup.utils.dart';
 class ShowDialog {
   ShowDialog._();
 
-  static void showErrorDialog({
+  static void showModalDialog({
     required BuildContext context,
-    required String errorMessage,
+    required String title,
+    required String message,
     VoidCallback? onClose,
   }) {
     Future.microtask(() {
@@ -14,8 +15,9 @@ class ShowDialog {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return ErrorPopup(
-              errorMessage: errorMessage,
+            return ModalPopup(
+              title: title,
+              message: message,
               onClose: onClose,
             );
           },

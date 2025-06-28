@@ -4,7 +4,7 @@ import 'package:forkify/res/fonts.dart';
 import 'package:forkify/utils/popup/show_dialog.utils.dart';
 import 'package:forkify/view/feature/addUserVisit/add_user_visit_form.widget.dart';
 import 'package:forkify/viewModel/authentication.view_model.dart';
-import 'package:forkify/viewModel/user_visit_view_model.dart';
+import 'package:forkify/viewModel/user_visit.view_model.dart';
 import 'package:provider/provider.dart';
 
 class AddUserVisit extends StatefulWidget {
@@ -69,12 +69,17 @@ class _AddUserVisitState extends State<AddUserVisit> {
                   if (context.mounted && !userVisitViewModel.isError)
                     {
                       Navigator.pop(context),
+                      ShowDialog.showModalDialog(
+                          title: 'Succès',
+                          context: context,
+                          message: "Création d'expérience réussie !"),
                     }
                   else
                     {
-                      ShowDialog.showErrorDialog(
+                      ShowDialog.showModalDialog(
+                          title: 'Erreur',
                           context: context,
-                          errorMessage:
+                          message:
                               'Un problème est survenu lors de la création d\'expérience. Veuillez réessayer plus tard.')
                     }
                 },

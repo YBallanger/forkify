@@ -52,10 +52,13 @@ class _SignupFormState extends State<SignupForm> {
         hideLoadingDialog(context);
       }
       if (viewModel.errorMessage != null) {
-        ShowDialog.showErrorDialog(
+        ShowDialog.showModalDialog(
+            title: "Erreur",
             context: context,
-            errorMessage: viewModel.errorMessage!,
-            onClose: () => {viewModel.resetMessage()});
+            message: viewModel.errorMessage!,
+            onClose: () => {
+                  viewModel.resetErrorMessage(),
+                });
       }
       return Form(
         key: _formKey,

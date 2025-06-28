@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ErrorPopup extends StatelessWidget {
-  const ErrorPopup({super.key, required this.errorMessage, this.onClose});
+class ModalPopup extends StatelessWidget {
+  const ModalPopup(
+      {super.key, required this.title, required this.message, this.onClose});
 
-  final String errorMessage;
+  final String title;
+  final String message;
   final VoidCallback? onClose;
 
   @override
@@ -18,11 +20,11 @@ class ErrorPopup extends StatelessWidget {
         }
       },
       child: AlertDialog(
-        title: const Text('Echec de connexion'),
+        title: Text(title),
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(errorMessage),
+              Text(message),
             ],
           ),
         ),

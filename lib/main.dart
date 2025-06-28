@@ -6,7 +6,7 @@ import 'package:forkify/res/theme/app_theme.dart';
 import 'package:forkify/utils/router.utils.dart';
 import 'package:forkify/viewModel/authentication.view_model.dart';
 import 'package:forkify/viewModel/user_statistics.view_model.dart';
-import 'package:forkify/viewModel/user_visit_view_model.dart';
+import 'package:forkify/viewModel/user_visit.view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
