@@ -1,11 +1,11 @@
-class UserVisitCreateDTO {
+class UserVisitCreateModel {
   String userId;
   String restaurantName;
   double amountSpent;
   double rating;
 
 //<editor-fold desc="Data Methods">
-  UserVisitCreateDTO({
+  UserVisitCreateModel({
     required this.userId,
     required this.restaurantName,
     required this.amountSpent,
@@ -15,7 +15,7 @@ class UserVisitCreateDTO {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is UserVisitCreateDTO &&
+      (other is UserVisitCreateModel &&
           runtimeType == other.runtimeType &&
           userId == other.userId &&
           restaurantName == other.restaurantName &&
@@ -39,13 +39,13 @@ class UserVisitCreateDTO {
         '}';
   }
 
-  UserVisitCreateDTO copyWith({
+  UserVisitCreateModel copyWith({
     String? userId,
     String? restaurantName,
     double? amountSpent,
     double? rating,
   }) {
-    return UserVisitCreateDTO(
+    return UserVisitCreateModel(
       userId: userId ?? this.userId,
       restaurantName: restaurantName ?? this.restaurantName,
       amountSpent: amountSpent ?? this.amountSpent,
@@ -62,8 +62,8 @@ class UserVisitCreateDTO {
     };
   }
 
-  factory UserVisitCreateDTO.fromMap(Map<String, dynamic> map) {
-    return UserVisitCreateDTO(
+  factory UserVisitCreateModel.fromMap(Map<String, dynamic> map) {
+    return UserVisitCreateModel(
       userId: map['userId'] as String,
       restaurantName: map['restaurantName'] as String,
       amountSpent: map['amountSpent'] as double,

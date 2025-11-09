@@ -5,7 +5,10 @@ import 'package:forkify/firebase_options.dart';
 import 'package:forkify/res/theme/app_theme.dart';
 import 'package:forkify/utils/router.utils.dart';
 import 'package:forkify/viewModel/authentication.view_model.dart';
+import 'package:forkify/viewModel/top_restaurants.view_model.dart';
 import 'package:forkify/viewModel/user_statistics.view_model.dart';
+import 'package:forkify/viewModel/user_visit.view_model.dart';
+import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -17,13 +20,19 @@ void main() async {
   FirebaseAuth.instance.authStateChanges().listen((User? user) {
     router.refresh();
   });
-  
+
   runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => UserStatisticsViewModel()),
-      ChangeNotifierProvider(create: (_) => AuthenticationViewModel()),
+    providers: <SingleChildWidget>[
+      ChangeNotifierProvider<AuthenticationViewModel>(
+          create: (_) => AuthenticationViewModel()),
+      ChangeNotifierProvider<TopRestaurantsViewModel>(
+          create: (_) => TopRestaurantsViewModel()),
+      ChangeNotifierProvider<UserStatisticsViewModel>(
+          create: (_) => UserStatisticsViewModel()),
+      ChangeNotifierProvider<UserVisitViewModel>(
+          create: (_) => UserVisitViewModel()),
     ],
-    child: MainApp(),
+    child: const MainApp(),
   ));
 }
 

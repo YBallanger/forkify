@@ -27,7 +27,7 @@ class AuthenticationService {
       );
 
       UserModel user = UserModel(
-          userId: userCredential.user!.uid, email: email, username: username);
+          id: userCredential.user!.uid, email: email, username: username);
 
       await ApiServices().postApi("/users", user.toMap());
     } catch (e) {
@@ -58,7 +58,7 @@ class AuthenticationService {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       UserModel user = UserModel(
-          userId: userCredential.user!.uid,
+          id: userCredential.user!.uid,
           email: userCredential.user!.uid,
           username: userCredential.user!.displayName ?? "Utilisateur");
       await ApiServices().postApi("/users", user.toMap());

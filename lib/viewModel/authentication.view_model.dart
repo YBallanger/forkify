@@ -20,7 +20,7 @@ class AuthenticationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetMessage() {
+  void resetErrorMessage() {
     _errorMessage = null;
     notifyListeners();
   }

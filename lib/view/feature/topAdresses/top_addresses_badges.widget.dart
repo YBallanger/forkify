@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:forkify/model/user_restaurant_statistics.model.dart';
+import 'package:forkify/model/restaurant_statistics/restaurant_rating.model.dart';
+import 'package:forkify/model/restaurant_statistics/restaurant_spending.model.dart';
+import 'package:forkify/model/restaurant_statistics/restaurant_statistics.model.dart';
+import 'package:forkify/model/restaurant_statistics/restaurant_visit.model.dart';
 import 'package:forkify/res/fonts.dart';
 import 'package:forkify/view/feature/topAdresses/top_addresses.feature.dart';
 
@@ -13,60 +16,62 @@ class TopAddressesBadges extends StatelessWidget {
     required this.badgesGraphType,
   });
 
-  final UserRestaurantStatisticsModel firstRestaurant;
-  final UserRestaurantStatisticsModel secondRestaurant;
-  final UserRestaurantStatisticsModel thirdRestaurant;
+  final RestaurantStatisticsModel firstRestaurant;
+  final RestaurantStatisticsModel secondRestaurant;
+  final RestaurantStatisticsModel thirdRestaurant;
   final BadgesGraphType badgesGraphType;
 
   String getTitle() {
     switch (badgesGraphType) {
       case BadgesGraphType.money:
-        return "Top 3 : Dépenses";
+        return 'Top 3 : Dépenses';
       case BadgesGraphType.rating:
-        return "Top 3 : Notes";
+        return 'Top 3 : Notes';
       case BadgesGraphType.visit:
-        return "Top 3 : Visites";
+        return 'Top 3 : Visites';
     }
   }
 
-  String getResult(UserRestaurantStatisticsModel restaurantStatistics) {
-    switch (badgesGraphType) {
-      case BadgesGraphType.money:
-        return "${restaurantStatistics.amountSpent.toStringAsFixed(2)} €";
-      case BadgesGraphType.rating:
-        return "${restaurantStatistics.rating.toStringAsFixed(1)} ☆";
-      case BadgesGraphType.visit:
-        return "${restaurantStatistics.numberOfVisits.toStringAsFixed(0)} visites";
+  String getResult(RestaurantStatisticsModel restaurantStatistics) {
+    switch (restaurantStatistics) {
+      case RestaurantSpendingModel _:
+        return '${restaurantStatistics.totalSpent.toStringAsFixed(2)} €';
+      case RestaurantRatingModel _:
+        return '${restaurantStatistics.rating.toStringAsFixed(1)} ☆';
+      case RestaurantVisitModel _:
+        return '${restaurantStatistics.totalVisits.toStringAsFixed(0)} visites';
+      default:
+        return '';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         Text(
           getTitle(),
           style: Fonts.subtitleMedium,
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Expanded(
               child: Column(
                 children: [
                   SvgPicture.asset(
-                    "asset/medal/silver-medal.svg",
+                    'asset/medal/silver-medal.svg',
                     width: 65,
                   ),
                   const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    secondRestaurant.restaurant.name,
+                    secondRestaurant.restaurantName,
                     style: Fonts.bodySmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -82,19 +87,18 @@ class TopAddressesBadges extends StatelessWidget {
             ),
             Expanded(
               child: Tooltip(
-                message: firstRestaurant.restaurant.name,
+                message: firstRestaurant.restaurantName,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     SvgPicture.asset(
-                      "asset/medal/gold-medal.svg",
+                      'asset/medal/gold-medal.svg',
                       width: 80,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Text(
-                      firstRestaurant.restaurant.name,
+                      firstRestaurant.restaurantName,
                       style: Fonts.bodySmall,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -113,7 +117,7 @@ class TopAddressesBadges extends StatelessWidget {
               child: Column(
                 children: [
                   SvgPicture.asset(
-                    "asset/medal/bronze-medal.svg",
+                    'asset/medal/bronze-medal.svg',
                     height: 65,
                     width: 65,
                   ),
@@ -121,7 +125,7 @@ class TopAddressesBadges extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    thirdRestaurant.restaurant.name,
+                    thirdRestaurant.restaurantName,
                     style: Fonts.bodySmall,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

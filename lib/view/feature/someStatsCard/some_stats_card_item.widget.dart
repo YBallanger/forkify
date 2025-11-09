@@ -16,10 +16,10 @@ class SomeStatsCardItem extends StatelessWidget {
           iconPath,
           height: 45,
         ),
-        SizedBox(
+        const SizedBox(
           width: 15,
         ),
-        Expanded(child:content)
+        Expanded(child: content)
       ],
     );
   }

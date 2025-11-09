@@ -3,17 +3,30 @@ import 'dart:convert';
 import 'package:forkify/model/restaurant.model.dart';
 
 class UserRestaurantStatisticsModel {
-  RestaurantModel restaurant;
-  double amountSpent;
-  double rating;
-  int numberOfVisits;
-
   UserRestaurantStatisticsModel({
     required this.restaurant,
     required this.amountSpent,
     required this.rating,
     required this.numberOfVisits,
   });
+
+  factory UserRestaurantStatisticsModel.fromMap(Map<String, dynamic> map) {
+    return UserRestaurantStatisticsModel(
+      restaurant:
+          RestaurantModel.fromMap(map['restaurant'] as Map<String, dynamic>),
+      amountSpent: map['amountSpent'] as double,
+      rating: map['rating'] as double,
+      numberOfVisits: map['numberOfVisits'] as int,
+    );
+  }
+
+  factory UserRestaurantStatisticsModel.fromJson(String source) =>
+      UserRestaurantStatisticsModel.fromMap(
+          json.decode(source) as Map<String, dynamic>);
+  RestaurantModel restaurant;
+  double amountSpent;
+  double rating;
+  int numberOfVisits;
 
   UserRestaurantStatisticsModel copyWith({
     RestaurantModel? restaurant,
@@ -38,21 +51,7 @@ class UserRestaurantStatisticsModel {
     };
   }
 
-  factory UserRestaurantStatisticsModel.fromMap(Map<String, dynamic> map) {
-    return UserRestaurantStatisticsModel(
-      restaurant:
-          RestaurantModel.fromMap(map['restaurant'] as Map<String, dynamic>),
-      amountSpent: map['amountSpent'] as double,
-      rating: map['rating'] as double,
-      numberOfVisits: map['numberOfVisits'] as int,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory UserRestaurantStatisticsModel.fromJson(String source) =>
-      UserRestaurantStatisticsModel.fromMap(
-          json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
