@@ -11,9 +11,10 @@ class UserVisitViewModel extends ChangeNotifier {
 
   Future<void> createUserVisit(UserVisitCreateModel userVisitCreateDTO) async {
     _isLoading = true;
+    _isError = false;
     notifyListeners();
     try {
-      UserVisitService().createUserVisit(userVisitCreateDTO);
+      await UserVisitService().createUserVisit(userVisitCreateDTO);
     } catch (error) {
       _isError = true;
       debugPrint('Erreur lors de la crétion d\'expérience : $error');

@@ -13,6 +13,7 @@ class AddUserVisitForm extends StatelessWidget {
     required this.isLoading,
     required this.onRatingChanged,
     required this.onSubmit,
+    required this.restaurantSuggestions,
   });
 
   final GlobalKey<FormState> formKey;
@@ -22,6 +23,7 @@ class AddUserVisitForm extends StatelessWidget {
   final bool isLoading;
   final ValueChanged<double> onRatingChanged;
   final VoidCallback onSubmit;
+  final List<String> restaurantSuggestions;
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +42,83 @@ class AddUserVisitForm extends StatelessWidget {
               key: formKey,
               child: Column(
                 children: <Widget>[
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  TextFormField(
-                    controller: restaurantNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Nom du restaurant',
-                      prefixIcon: Icon(Icons.restaurant),
-                    ),
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Le restaurant ne doit pas être vide';
+                  const Spacer(),
+                  Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) {
+                      if (textEditingValue.text.isEmpty) {
+                        return const Iterable<String>.empty();
                       }
-                      return null;
+                      final String query = textEditingValue.text.toLowerCase();
+                      return restaurantSuggestions.where((String option) {
+                        return option.toLowerCase().contains(query);
+                      });
+                    },
+                    onSelected: (String selection) {
+                      restaurantNameController.text = selection;
+                    },
+                    fieldViewBuilder: (BuildContext context,
+                        TextEditingController fieldTextEditingController,
+                        FocusNode focusNode,
+                        VoidCallback onFieldSubmitted) {
+                      // Synchronisation initiale et continue entre les deux controllers
+                      if (fieldTextEditingController.text !=
+                          restaurantNameController.text) {
+                        fieldTextEditingController.text =
+                            restaurantNameController.text;
+                        fieldTextEditingController.selection =
+                            restaurantNameController.selection;
+                      }
+                      fieldTextEditingController.addListener(() {
+                        if (restaurantNameController.text !=
+                            fieldTextEditingController.text) {
+                          restaurantNameController.text =
+                              fieldTextEditingController.text;
+                          restaurantNameController.selection =
+                              fieldTextEditingController.selection;
+                        }
+                      });
+
+                      return TextFormField(
+                        controller: fieldTextEditingController,
+                        focusNode: focusNode,
+                        decoration: const InputDecoration(
+                          labelText: 'Nom du restaurant',
+                          prefixIcon: Icon(Icons.restaurant),
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Le restaurant ne doit pas être vide';
+                          }
+                          return null;
+                        },
+                      );
+                    },
+                    optionsViewBuilder: (BuildContext context,
+                        AutocompleteOnSelected<String> onSelected,
+                        Iterable<String> options) {
+                      return Align(
+                        alignment: Alignment.topLeft,
+                        child: Material(
+                          elevation: 4.0,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxHeight: 200),
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: options.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final String option = options.elementAt(index);
+                                return ListTile(
+                                  title: Text(option),
+                                  onTap: () {
+                                    onSelected(option);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(

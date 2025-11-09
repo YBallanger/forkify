@@ -8,8 +8,11 @@ class TopRestaurantsViewModel extends ChangeNotifier {
 
   TopRestaurantsModel? get topRestaurants => _topRestaurants;
   bool get isLoading => _isLoading;
+  bool get hasTopRestaurants => _topRestaurants != null;
 
-  Future<void> fetchTopRestaurants() async {
+  Future<void> fetchTopRestaurants({bool forceRefresh = false}) async {
+    if (!forceRefresh && hasTopRestaurants) return;
+
     _isLoading = true;
     notifyListeners();
 

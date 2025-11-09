@@ -22,12 +22,6 @@ class _TopAddressesState extends State<TopAddresses>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TopRestaurantsViewModel topRestaurantsViewModelViewModel =
-          context.read<TopRestaurantsViewModel>();
-      topRestaurantsViewModelViewModel.fetchTopRestaurants();
-    });
   }
 
   @override

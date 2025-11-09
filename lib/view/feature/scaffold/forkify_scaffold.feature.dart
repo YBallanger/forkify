@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:forkify/viewModel/restaurant.view_model.dart';
+import 'package:forkify/viewModel/top_restaurants.view_model.dart';
+import 'package:forkify/viewModel/user_statistics.view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class ForkifyScaffold extends StatefulWidget {
   const ForkifyScaffold({
@@ -14,6 +18,23 @@ class ForkifyScaffold extends StatefulWidget {
 }
 
 class _ForkifyScaffoldState extends State<ForkifyScaffold> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final UserStatisticsViewModel userStatisticsViewModel =
+          context.read<UserStatisticsViewModel>();
+      userStatisticsViewModel.fetchUserStatistics();
+      final TopRestaurantsViewModel topRestaurantsViewModelViewModel =
+          context.read<TopRestaurantsViewModel>();
+      topRestaurantsViewModelViewModel.fetchTopRestaurants();
+      final RestaurantsViewModel restaurantsViewModel =
+          context.read<RestaurantsViewModel>();
+      restaurantsViewModel.fetchRestaurants();
+    });
+  }
+
   int _currentIndex = 1;
 
   void handleSwitchPage(int newIndex) {

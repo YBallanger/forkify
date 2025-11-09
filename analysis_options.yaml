@@ -9,7 +9,6 @@ linter:
     - camel_case_extensions
     - constant_identifier_names
     - curly_braces_in_flow_control_structures
-    - always_specify_types
     - annotate_overrides
     - prefer_final_fields
     - prefer_typing_uninitialized_variables

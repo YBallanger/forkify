@@ -5,6 +5,7 @@ import 'package:forkify/firebase_options.dart';
 import 'package:forkify/res/theme/app_theme.dart';
 import 'package:forkify/utils/router.utils.dart';
 import 'package:forkify/viewModel/authentication.view_model.dart';
+import 'package:forkify/viewModel/restaurant.view_model.dart';
 import 'package:forkify/viewModel/top_restaurants.view_model.dart';
 import 'package:forkify/viewModel/user_statistics.view_model.dart';
 import 'package:forkify/viewModel/user_visit.view_model.dart';
@@ -25,6 +26,8 @@ void main() async {
     providers: <SingleChildWidget>[
       ChangeNotifierProvider<AuthenticationViewModel>(
           create: (_) => AuthenticationViewModel()),
+      ChangeNotifierProvider<RestaurantsViewModel>(
+          create: (_) => RestaurantsViewModel()),
       ChangeNotifierProvider<TopRestaurantsViewModel>(
           create: (_) => TopRestaurantsViewModel()),
       ChangeNotifierProvider<UserStatisticsViewModel>(
