@@ -1,15 +1,25 @@
 import 'dart:convert';
 
 class UserStatisticsModel {
-  double amountSpent;
-  int numberOfVisits;
-  int numberOfNewRestaurants;
+  factory UserStatisticsModel.fromMap(Map<String, dynamic> map) {
+    return UserStatisticsModel(
+      amountSpent: map['amountSpent'] as double,
+      numberOfVisits: map['numberOfVisits'] as int,
+      numberOfNewRestaurants: map['numberOfNewRestaurants'] as int,
+    );
+  }
 
   UserStatisticsModel({
     required this.amountSpent,
     required this.numberOfVisits,
     required this.numberOfNewRestaurants,
   });
+
+  factory UserStatisticsModel.fromJson(String source) =>
+      UserStatisticsModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  double amountSpent;
+  int numberOfVisits;
+  int numberOfNewRestaurants;
 
   UserStatisticsModel copyWith({
     double? amountSpent,
@@ -32,18 +42,7 @@ class UserStatisticsModel {
     };
   }
 
-  factory UserStatisticsModel.fromMap(Map<String, dynamic> map) {
-    return UserStatisticsModel(
-      amountSpent: map['amountSpent'] as double,
-      numberOfVisits: map['numberOfVisits'] as int,
-      numberOfNewRestaurants: map['numberOfNewRestaurants'] as int,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory UserStatisticsModel.fromJson(String source) =>
-      UserStatisticsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() =>

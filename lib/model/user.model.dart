@@ -1,7 +1,11 @@
 class UserModel {
-  String id;
-  String email;
-  String username;
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      id: map['id'] as String,
+      email: map['email'] as String,
+      username: map['username'] as String,
+    );
+  }
 
 //<editor-fold desc="Data Methods">
   UserModel({
@@ -9,6 +13,9 @@ class UserModel {
     required this.email,
     required this.username,
   });
+  String id;
+  String email;
+  String username;
 
   @override
   bool operator ==(Object other) =>
@@ -44,19 +51,11 @@ class UserModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': this.id,
-      'email': this.email,
-      'username': this.username,
+    return <String, dynamic>{
+      'id': id,
+      'email': email,
+      'username': username,
     };
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      id: map['id'] as String,
-      email: map['email'] as String,
-      username: map['username'] as String,
-    );
   }
 
 //</editor-fold>

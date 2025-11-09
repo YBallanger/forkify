@@ -32,78 +32,78 @@ class _SomeStatsCardState extends State<SomeStatsCard>
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).colorScheme.outline),
-        borderRadius: BorderRadius.all(Radius.circular(25)),
+        borderRadius: const BorderRadius.all(Radius.circular(25)),
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Column(
         children: <Widget>[
           Text(
-            "Quelques statistiques",
+            'Quelques statistiques',
             style: Fonts.titleMedium
                 .apply(color: Theme.of(context).colorScheme.onPrimaryContainer),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SomeStatsCardItem(
-            iconPath: "asset/someStats/dollar-pig.svg",
+            iconPath: 'asset/someStats/dollar-pig.svg',
             content: userStatisticsViewModel.isLoading
-                ? TextShimmer()
+                ? const TextShimmer()
                 : RichText(
                     text: TextSpan(
                       style: Fonts.bodyMedium.apply(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer),
                       children: <TextSpan>[
-                        TextSpan(text: "Vous avez dépensé "),
+                        const TextSpan(text: 'Vous avez dépensé '),
                         TextSpan(
                             text:
                                 "${userStatisticsViewModel.userStatistics?.amountSpent.toStringAsFixed(2) ?? '0.00'} €",
                             style: Fonts.boldBodyMedium),
-                        TextSpan(text: " en restaurant !"),
+                        const TextSpan(text: ' en restaurant !'),
                       ],
                     ),
                   ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SomeStatsCardItem(
-            iconPath: "asset/someStats/location-pin.svg",
+            iconPath: 'asset/someStats/location-pin.svg',
             content: userStatisticsViewModel.isLoading
-                ? TextShimmer()
+                ? const TextShimmer()
                 : RichText(
                     text: TextSpan(
                       style: Fonts.bodyMedium.apply(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer),
                       children: <TextSpan>[
-                        TextSpan(text: "Vous avez mangé "),
+                        const TextSpan(text: 'Vous avez mangé '),
                         TextSpan(
                             text:
-                                "${userStatisticsViewModel.userStatistics?.numberOfVisits ?? 0}",
+                                '${userStatisticsViewModel.userStatistics?.numberOfVisits ?? 0}',
                             style: Fonts.boldBodyMedium),
-                        TextSpan(text: " fois dans des restaurants !"),
+                        const TextSpan(text: ' fois dans des restaurants !'),
                       ],
                     ),
                   ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SomeStatsCardItem(
-            iconPath: "asset/someStats/compass.svg",
+            iconPath: 'asset/someStats/compass.svg',
             content: userStatisticsViewModel.isLoading
-                ? TextShimmer()
+                ? const TextShimmer()
                 : RichText(
                     text: TextSpan(
                       style: Fonts.bodyMedium.apply(
                           color:
                               Theme.of(context).colorScheme.onPrimaryContainer),
                       children: <TextSpan>[
-                        TextSpan(text: "Vous êtes allé dans "),
+                        const TextSpan(text: 'Vous êtes allé dans '),
                         TextSpan(
                             text:
-                                "${userStatisticsViewModel.userStatistics?.numberOfNewRestaurants ?? 0}",
+                                '${userStatisticsViewModel.userStatistics?.numberOfNewRestaurants ?? 0}',
                             style: Fonts.boldBodyMedium),
-                        TextSpan(text: " restaurants différents !"),
+                        const TextSpan(text: ' restaurants différents !'),
                       ],
                     ),
                   ),
