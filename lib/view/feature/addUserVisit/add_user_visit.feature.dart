@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:forkify/model/restaurant.model.dart';
 import 'package:forkify/model/user_visit_create.model.dart';
 import 'package:forkify/res/fonts.dart';
 import 'package:forkify/utils/popup/show_dialog.utils.dart';
 import 'package:forkify/view/feature/addUserVisit/add_user_visit_form.widget.dart';
 import 'package:forkify/viewModel/authentication.view_model.dart';
+import 'package:forkify/viewModel/restaurant.view_model.dart';
+import 'package:forkify/viewModel/top_restaurants.view_model.dart';
+import 'package:forkify/viewModel/user_statistics.view_model.dart';
 import 'package:forkify/viewModel/user_visit.view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +27,11 @@ class _AddUserVisitState extends State<AddUserVisit> {
   Future<void> handleSubmit(double rating) async {
     final UserVisitViewModel userVisitViewModel =
         context.read<UserVisitViewModel>();
+    final TopRestaurantsViewModel topRestaurantsViewModel =
+        context.read<TopRestaurantsViewModel>();
+    final UserStatisticsViewModel userStatisticsViewModel =
+        context.read<UserStatisticsViewModel>();
+
     if (_formKey.currentState?.validate() ?? false) {
       final String restaurantName = _restaurantNameController.text;
       final String priceText = _priceController.text.replaceAll(',', '.');
@@ -35,11 +44,20 @@ class _AddUserVisitState extends State<AddUserVisit> {
         rating: rating,
       );
       await userVisitViewModel.createUserVisit(userVisitCreateDTO);
+      await topRestaurantsViewModel.fetchTopRestaurants(forceRefresh: true);
+      await userStatisticsViewModel.fetchUserStatistics(forceRefresh: true);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final RestaurantsViewModel restaurantsViewModel =
+        Provider.of<RestaurantsViewModel>(context);
+    final List<String> restaurantSuggestions = restaurantsViewModel.restaurants
+            ?.map((RestaurantModel restaurant) => restaurant.name)
+            .toList() ??
+        [];
+
     return SizedBox(
       height: 50,
       child: FilledButton.icon(
@@ -55,6 +73,7 @@ class _AddUserVisitState extends State<AddUserVisit> {
                 builder: (BuildContext context, StateSetter setModalState) {
               final UserVisitViewModel userVisitViewModel =
                   context.watch<UserVisitViewModel>();
+
               return AddUserVisitForm(
                 formKey: _formKey,
                 restaurantNameController: _restaurantNameController,
@@ -64,18 +83,18 @@ class _AddUserVisitState extends State<AddUserVisit> {
                 onRatingChanged: (double newRating) => setModalState(() {
                   rating = newRating;
                 }),
-                onSubmit: () async => {
+                onSubmit: () async => <void>{
                   await handleSubmit(rating),
                   if (context.mounted && !userVisitViewModel.isError)
-                    {
+                    <void>{
                       Navigator.pop(context),
                       ShowDialog.showModalDialog(
                           title: 'Succès',
                           context: context,
                           message: "Création d'expérience réussie !"),
                     }
-                  else
-                    {
+                  else if (context.mounted)
+                    <void>{
                       ShowDialog.showModalDialog(
                           title: 'Erreur',
                           context: context,
@@ -83,6 +102,8 @@ class _AddUserVisitState extends State<AddUserVisit> {
                               'Un problème est survenu lors de la création d\'expérience. Veuillez réessayer plus tard.')
                     }
                 },
+                // passez la liste ici
+                restaurantSuggestions: restaurantSuggestions,
               );
             });
           },

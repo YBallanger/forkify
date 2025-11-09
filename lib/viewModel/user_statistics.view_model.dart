@@ -8,8 +8,13 @@ class UserStatisticsViewModel extends ChangeNotifier {
 
   UserStatisticsModel? get userStatistics => _userStatistics;
   bool get isLoading => _isLoading;
+  bool get hasStatistics => _userStatistics != null;
 
-  Future<void> fetchUserStatistics() async {
+  Future<void> fetchUserStatistics({bool forceRefresh = false}) async {
+    if (!forceRefresh && _userStatistics != null) {
+      return;
+    }
+
     _isLoading = true;
     notifyListeners();
 
@@ -23,5 +28,10 @@ class UserStatisticsViewModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void clearStatistics() {
+    _userStatistics = null;
+    notifyListeners();
   }
 }

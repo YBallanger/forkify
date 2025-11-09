@@ -15,17 +15,6 @@ class SomeStatsCard extends StatefulWidget {
 class _SomeStatsCardState extends State<SomeStatsCard>
     with SingleTickerProviderStateMixin {
   @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final UserStatisticsViewModel userStatisticsViewModel =
-          context.read<UserStatisticsViewModel>();
-      userStatisticsViewModel.fetchUserStatistics();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final UserStatisticsViewModel userStatisticsViewModel =
         Provider.of<UserStatisticsViewModel>(context);
